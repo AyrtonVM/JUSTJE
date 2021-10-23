@@ -1,4 +1,4 @@
-const trackList = ["piano1", "piano2", "rhodes1", "rhodes2", "synth1", "synth2", "synth3", "white_noise"]
+const trackList = ["piano1", "piano2", "rhodes1", "rhodes2", "synth1"]
 
 // document.addEventListener('play', function (e) {
 //     var audios = document.getElementsByTagName('audio');
