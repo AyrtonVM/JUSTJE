@@ -29,29 +29,25 @@ function generateAudioPlayer(src, id) {
 function generateTracks() {
     let globalHTML = document.getElementsByClassName("global")[0];
     for (let j = 0; j < 5; j++) {
-        globalHTML.innerHTML += `<div class="control ` + j + `">`
+        var controlHTML = `<div class="control ` + j + `">`
         for (let k = 0; k < trackList.length; k++) {
-            globalHTML.innerHTML += generateAudioPlayer(trackList[k], k);
+            controlHTML += generateAudioPlayer(trackList[k], k);
         }
-        globalHTML.innerHTML +=
-            `
-            <div>
-            <br>
-            <br>
-            <br>
-        `
+        controlHTML += `</div>`
+        globalHTML.innerHTML += controlHTML;
     }
 }
 
 
-// document.addEventListener('play', function (e) {
-//     var audios = document.getElementsByTagName('audio');
-//     for (var i = 0, len = audios.length; i < len; i++) {
-//         if (audios[i] != e.target) {
-//             audios[i].pause();
-//         }
-//     }
-// }, true);
+document.addEventListener('play', function (e) {
+    var audios = document.getElementsByTagName('audio');
+    for (var i = 0; i < audios.length; i++) {
+        console.log(e.target);
+        if (audios[i] != e.target) {
+            audios[i].pause();
+        }
+    }
+}, true);
 
 
 
