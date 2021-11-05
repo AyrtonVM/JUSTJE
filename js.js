@@ -1,54 +1,61 @@
-const trackList = ["piano1", "piano2", "rhodes1", "rhodes2", "synth1"]
+window.onload = function generateMockups() {
+    var body = document.getElementById("body");
 
-/**
- * Deze functie genereert een audio object.
- * @param {*} src is de naam van de file
- * @param {*} id wordt gebruikt om elke audio object van elkaar te scheiden
- * @returns 
- */
-function generateAudioPlayer(src, id) {
-    let audioObj = `      
-    <div id="audio` + id + `">
-      <audio
-        controls
-        src="` + src + `.mp3">
-        Your browser does not support the
-        <code>audio</code> element.
-      </audio>
-    </div>
-    `
-    return audioObj;
+    for (let j = 0; j <= 3; j++) {
+
+        var controlHTML = document.createElement('div');
+        controlHTML.id = "Row_" + [j];
+        body.appendChild(controlHTML)
+
+        var paragraph = document.createElement('p');
+        paragraph.innerHTML = "Dit liedje speelt af:";
+        controlHTML.appendChild(paragraph)
+
+        for(t = 0; t <= 7; t++) {
+            var sound      = document.createElement('audio');
+            sound.id       = "Song_" + [t] + "_Row_" + [j];
+            sound.controls = 'controls';
+            sound.src      = tracks[t].path;
+            controlHTML.appendChild(sound);
+        }
+    }
+
+    var buttonMuteAll = document.createElement('button');
+    buttonMuteAll.innerHTML = "Mute all"
+    buttonMuteAll.setAttribute("onclick", "muteAll()")
+    body.appendChild(buttonMuteAll)
+
+    var buttonMuteAll = document.createElement('button');
+    buttonMuteAll.innerHTML = "Unmute all"
+    buttonMuteAll.setAttribute("onclick", "unmuteAll()")
+    body.appendChild(buttonMuteAll)
+
+    let buttonRandomAll = document.createElement('button');
+    buttonRandomAll.innerHTML = "Randomize"
+    buttonRandomAll.setAttribute("onclick", "randomSound()")
+    body.appendChild(buttonRandomAll)
 }
 
-/**
- * Is nog niet af
- * 
- * Deze functie genereert de tracks, eerst 5 keer een track en in elke track
- * 5 audio objecten (zoveel als in de lijst van tracks)
- */
-function generateTracks() {
-    let globalHTML = document.getElementsByClassName("global")[0];
-    for (let j = 0; j < 5; j++) {
-        var controlHTML = `<div class="control ` + j + `">`
-        for (let k = 0; k < trackList.length; k++) {
-            controlHTML += generateAudioPlayer(trackList[k], k);
+function randomSound() {
+
+}
+
+function muteAll() {
+    for(r = 0; r <= 3; r++) {
+        for(t = 0; t <= 7; t++) {
+            var vid = document.getElementById("Song_" + [t] + "_Row_" + [r]);
+            vid.muted = true;
         }
-        controlHTML += `</div>`
-        globalHTML.innerHTML += controlHTML;
+    }
+}
+
+function unmuteAll() {
+    for(r = 0; r <= 3; r++) {
+        for(t = 0; t <= 7; t++) {
+            var vid = document.getElementById("Song_" + [t] + "_Row_" + [r]);
+            vid.muted = false;
+        }
     }
 }
 
 
-document.addEventListener('play', function (e) {
-    var audios = document.getElementsByTagName('audio');
-    for (var i = 0; i < audios.length; i++) {
-        console.log(e.target);
-        if (audios[i] != e.target) {
-            audios[i].pause();
-        }
-    }
-}, true);
-
-
-
-generateTracks();
